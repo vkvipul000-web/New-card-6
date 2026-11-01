@@ -15,7 +15,7 @@ html{scroll-behavior:smooth}
 body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
 body.locked{overflow:hidden;height:100svh}
 button,a{-webkit-tap-highlight-color:transparent}
-.music-btn{position:fixed;right:16px;bottom:18px;z-index:8000;display:none;align-items:center;gap:8px;padding:12px 17px;border:1px solid var(--gold);border-radius:40px;background:var(--wine);color:white;font-weight:700;box-shadow:0 8px 24px #0003;cursor:pointer}
+.music-btn{position:fixed;right:16px;bottom:18px;z-index:8000;display:none;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--gold);border-radius:28px;background:var(--wine);color:white;font-size:11px;font-weight:700;box-shadow:0 5px 16px #0003;cursor:pointer}
 .music-btn.show{display:flex}
 .door-wrap{position:fixed;inset:0;z-index:9999;display:flex;perspective:1500px;background:radial-gradient(circle,#5b1023,#21050d);cursor:pointer;user-select:none;transition:opacity .8s ease .9s,visibility .8s ease .9s}
 .door-wrap.open{opacity:0;visibility:hidden;pointer-events:none}
@@ -82,6 +82,14 @@ button,a{-webkit-tap-highlight-color:transparent}
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.1}}
 .footer{padding:40px 16px 80px;text-align:center;background:#4a0d1d;color:#fff;border-top:2px solid var(--gold)}
 .footer-names{font:36px "Great Vibes",cursive;color:var(--gold-light)}
+/* Compact card-design contact reveal, kept clear of the fixed music control */
+.card-contact{position:fixed;left:16px;bottom:18px;transform:none;z-index:7990;width:max-content;max-width:calc(100vw - 150px);text-align:center}
+.card-contact-btn{display:block;margin:0 auto;padding:8px 12px;border:1px solid var(--gold);border-radius:28px;background:#fff8e8;color:var(--wine);font-size:11px;font-weight:800;letter-spacing:.2px;box-shadow:0 5px 16px #0002;cursor:pointer;white-space:nowrap}
+.card-contact-number{position:absolute;bottom:calc(100% + 7px);left:0;transform:translateY(8px);opacity:0;visibility:hidden;pointer-events:none;white-space:nowrap;color:#fff5dc;background:var(--wine);border:1px solid var(--gold);border-radius:22px;padding:7px 10px;font-size:12px;font-weight:800;letter-spacing:.5px;box-shadow:0 5px 16px #0003;transition:opacity .28s ease,transform .28s ease;max-width:calc(100vw - 170px)}
+.card-contact.open .card-contact-number{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.card-contact-number a{color:inherit;text-decoration:none}
+@media(max-width:420px){.card-contact{left:12px;bottom:18px;max-width:calc(100vw - 145px)}.card-contact-btn{font-size:10px;padding:8px 10px;letter-spacing:0}.card-contact-number{font-size:12px;padding:7px 9px;letter-spacing:.4px;max-width:calc(100vw - 165px)}.music-btn{right:12px;bottom:18px;padding:8px 10px;font-size:10px}}
+
 @media(min-width:700px){.hero{padding-block:65px}.sec{padding-block:85px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
@@ -360,6 +368,26 @@ document.getElementById("popup").addEventListener("click",e=>{if(e.target.id==="
 
 document.getElementById("shareBtn").addEventListener("click",()=>{const txt="Wedding Invitation 💌\nMd. Sarfraj Ansari ♥ Rajiya Khatoon\nNikah: 24 December 2026\nReception & Walima: 25 December 2026, 7:00 PM\nVenue: At Our Residence, Suhwal, Ghazipur, Uttar Pradesh\n\nOpen the invitation: "+location.href;window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank","noopener")});
 document.getElementById("calBtn").addEventListener("click",()=>{const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Wedding Invitation//EN","CALSCALE:GREGORIAN","BEGIN:VEVENT","DTSTART:20261224T143000Z","DTEND:20261224T173000Z","SUMMARY:Wedding - Sarfraj and Rajiya","LOCATION:At Our Residence, Suhwal, Ghazipur, Uttar Pradesh","DESCRIPTION:Nikah celebration","END:VEVENT","BEGIN:VEVENT","DTSTART:20261225T133000Z","DTEND:20261225T153000Z","SUMMARY:Reception and Walima - Sarfraj and Rajiya","LOCATION:At Our Residence, Suhwal, Ghazipur, Uttar Pradesh","END:VEVENT","END:VCALENDAR"].join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar;charset=utf-8"}));a.download="Sarfraj-Rajiya-Wedding.ics";a.click();URL.revokeObjectURL(a.href)});
+</script>
+
+<div class="card-contact" id="cardContact">
+  <button class="card-contact-btn" id="cardContactBtn" type="button" aria-expanded="false">
+    DESIGN YOUR CARD NOW
+  </button>
+  <div class="card-contact-number" id="cardContactNumber">
+    <a href="tel:8948269425">8948269425</a>
+  </div>
+</div>
+<script>
+(function(){
+  const box=document.getElementById("cardContact");
+  const btn=document.getElementById("cardContactBtn");
+  btn.addEventListener("click",function(){
+    const open=box.classList.toggle("open");
+    btn.setAttribute("aria-expanded",String(open));
+    btn.textContent=open?"YOUR WEDDING CARD":"DESIGN YOUR CARD NOW";
+  });
+})();
 </script>
 </body>
 </html>
